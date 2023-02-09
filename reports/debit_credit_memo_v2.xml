@@ -213,7 +213,7 @@
                      <span style="margin-left:20px; margin-top:60px;">
                          <br/>
                          <br/>
-                        <span>TOTAL AMOUNT = US$: </span><span t-esc="o.getting_total_of_debit_credit_val" t-options='{"widget": "float", "precision": 2}'/>
+                        <span>TOTAL AMOUNT = US$: </span><span t-esc="o.total_credit_val" t-options='{"widget": "float", "precision": 2}'/>
                     </span>
 
 
@@ -224,7 +224,7 @@
                 <div style="margin-top:120px; margin-left:10px;">
                         <h6>
                         <span>USD: </span>
-                             <span t-esc="o.getting_total_of_debit_credit_val" t-options='{"widget": "float", "precision": 2}'/>
+                             <span t-esc="o.total_credit_val" t-options='{"widget": "float", "precision": 2}'/>
                         </h6>
                 </div>
             </div>
@@ -298,7 +298,7 @@
 <!--                            </t>-->
 <!--                                <h6 t-esc="val.debit"/>-->
                         </h6>
-                        <span t-esc="o.getting_total_of_debit_credit_val" t-options='{"widget": "float", "precision": 2}'/>
+                        <span t-esc="o.total_credit_val" t-options='{"widget": "float", "precision": 2}'/>
                     </div>
                     <div style="border: 1px dashed white;
                     text-align: center;
@@ -322,7 +322,7 @@
 <!--                            </t>-->
 <!--                                <h6 t-esc="val.debit"/>-->
                         </h6>
-                        <span t-esc="o.getting_total_of_debit_credit_val" t-options='{"widget": "float", "precision": 2}'/>
+                        <span t-esc="o.total_credit_val" t-options='{"widget": "float", "precision": 2}'/>
                     </div>
                 </div>
             </div>

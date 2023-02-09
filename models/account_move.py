@@ -62,6 +62,12 @@ class account_move(models.Model):
     getting_total_of_debit_credit_var = fields.Float(compute='getting_total_of_debit_credit')
     getting_total_of_debit_credit_val = fields.Float()
 
+    total_credit_val = fields.Float()
+
+    deduct_value = fields.Float()
+
+    amm_total_usd = fields.Float()
+
     def getting_total_of_debit_credit(self):
         self.getting_total_of_debit_credit_var = 0
         a = 0
@@ -89,19 +95,22 @@ class account_move(models.Model):
                 save_record = 0
                 for rec in number:
                     save_record = int(rec)
-                total = self.total_usd / save_record
+                total = self.getting_total_of_debit_credit_val / save_record
                 self.forex_and_amm_val_v2 = total
+
 
                 debit_val = 0
                 for rec_debit in self.line_ids:
                     debit_val = rec_debit.debit / save_record
                     rec_debit.debit_data_v2 = debit_val
 
+                total_credit = 0
                 credit_val = 0
                 for rec_credit in self.line_ids:
                     credit_val = rec_credit.credit / save_record
                     rec_credit.credit_data_v2 = credit_val
-
+                total_credit += credit_val
+                self.total_credit_val = total_credit
 
             elif get_curr_name == 'USD':
                 currency = self.env['res.currency'].search([('name', '=', 'PHP')])
@@ -114,7 +123,7 @@ class account_move(models.Model):
                 save_record = 0
                 for rec in number:
                     save_record = int(rec)
-                total = self.total_usd
+                total = self.getting_total_of_debit_credit_val
                 self.forex_and_amm_val_v2 = total
 
                 debit_val = 0
@@ -122,10 +131,13 @@ class account_move(models.Model):
                     debit_val = rec_debit.debit / save_record
                     rec_debit.debit_data_v2 = debit_val
 
+                total_credit = 0
                 credit_val = 0
                 for rec_credit in self.line_ids:
                     credit_val = rec_credit.credit / save_record
                     rec_credit.credit_data_v2 = credit_val
+                total_credit += credit_val
+                self.total_credit_val = total_credit
             elif get_curr_name == 'EUR':
                 currency = self.env['res.currency'].search([('name', '=', 'PHP')])
                 currency_id_here = currency.id
@@ -139,10 +151,13 @@ class account_move(models.Model):
                     save_record = int(rec)
                 total = self.total_usd / save_record
                 self.forex_and_amm_val_v2 = total
+
+
             else:
                 print('Error')
         else:
             print('Error')
+
 
     def computing_forex_and_amm_var(self):
         self.computing_forex_and_amm = 0
@@ -153,7 +168,7 @@ class account_move(models.Model):
         print(get_curr_name)
         if get_curr_name:
             if get_curr_name == 'PHP':
-                self.forex_and_amm_val = self.amount_total
+                self.forex_and_amm_val = self.getting_total_of_debit_credit_val
             elif get_curr_name == 'USD':
                 currency = self.env['res.currency'].search([('name', '=', 'PHP')])
                 currency_id_here = currency.id
@@ -165,8 +180,14 @@ class account_move(models.Model):
                 save_record = 0
                 for rec in number:
                     save_record = int(rec)
-                total = self.amount_total * save_record
+                total = self.getting_total_of_debit_credit_val / save_record
                 self.forex_and_amm_val = total
+                amm_usd = self.forex_and_amm_val / save_record
+                self.amm_total_usd = amm_usd
+
+                minus = self.forex_and_amm_val - self.add_percent
+                self.deduct_value = minus
+
             elif get_curr_name == 'EUR':
                 currency = self.env['res.currency'].search([('name', '=', 'PHP')])
                 currency_id_here = currency.id
@@ -178,7 +199,7 @@ class account_move(models.Model):
                 save_record = 0
                 for rec in number:
                     save_record = int(rec)
-                total = self.amount_total / save_record
+                total = self.getting_total_of_debit_credit_val / save_record
                 self.forex_and_amm_val = total
             else:
                 print('Error')
@@ -187,7 +208,7 @@ class account_move(models.Model):
 
     def adding_usd_with_percent(self):
         self.adding_usd_with_percent_here = 0
-        adding = self.getting_total_of_debit_credit_val + self.add_percent
+        adding = self.amm_total_usd + self.add_percent
         print(self.getting_total_of_debit_credit_val, '<-- USD')
         print(adding, '<-- Adding')
         self.adding_usd_with_percent_value = adding
@@ -209,7 +230,7 @@ class account_move(models.Model):
 
     def converting_with_fee(self):
         self.converting_percent = 0
-        five_percent = self.usd_to_php
+        five_percent = self.amm_total_usd
         print(five_percent, '<-- FIVE PERCENT')
         total_convert = five_percent * 0.05
         self.add_percent = total_convert
@@ -537,7 +558,7 @@ class account_move(models.Model):
 
     def _amount_in_word(self):
         for rec in self:
-            rec.word_num = num2words((rec.total_usd))
+            rec.word_num = num2words(rec.total_usd)
 
     def sample(self):
         sample = self.amount_total_signed

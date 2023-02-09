@@ -215,7 +215,7 @@
                     </h6>
                     <h6>
                         <span>AMOUNT USD : </span>
-                             <span t-esc="o.getting_total_of_debit_credit_val" t-options='{"widget": "float", "precision": 2}'/>
+                             <span t-esc="o.amm_total_usd" t-options='{"widget": "float", "precision": 2}'/>
                     </h6>
                 </div>
                 <div style="margin-left:120px">
@@ -228,7 +228,7 @@
                     <h6>
                         <h6>-------------------</h6>
                         <span>TOTAL US$ : </span>
-                             <span t-esc="o.adding_usd_with_percent_value" t-options='{"widget": "float", "precision": 2}'/>
+                             <span t-esc="o.forex_and_amm_val" t-options='{"widget": "float", "precision": 2}'/>
                          <h6>-------------------</h6>
                     </h6>
 <!--                    divided_usd + o.usd_to_php-->
@@ -244,7 +244,7 @@
                 <div style="margin-top:400px; margin-left:10px;">
                         <h6>
                         <span>USD: </span>
-                             <span t-esc="o.getting_total_of_debit_credit_val" t-options='{"widget": "float", "precision": 2}'/>
+                             <span t-esc="o.adding_usd_with_percent_value" t-options='{"widget": "float", "precision": 2}'/>
                         </h6>
                 </div>
             </div>
@@ -318,7 +318,7 @@
 <!--                            </t>-->
 <!--                                <h6 t-esc="val.debit"/>-->
                         </h6>
-                        <span t-esc="o.getting_total_of_debit_credit_val" t-options='{"widget": "float", "precision": 2}'/>
+                        <span t-esc="o.adding_usd_with_percent_value" t-options='{"widget": "float", "precision": 2}'/>
                     </div>
                     <div style="border: 1px dashed white;
                     text-align: center;
@@ -342,7 +342,7 @@
 <!--                            </t>-->
 <!--                                <h6 t-esc="val.debit"/>-->
                         </h6>
-                        <span t-esc="o.getting_total_of_debit_credit_val" t-options='{"widget": "float", "precision": 2}'/>
+                        <span t-esc="o.adding_usd_with_percent_value" t-options='{"widget": "float", "precision": 2}'/>
                     </div>
                 </div>
             </div>
