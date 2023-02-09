@@ -215,7 +215,7 @@
                     </h6>
                     <h6>
                         <span>AMOUNT USD : </span>
-                             <span t-esc="o.amm_total_usd" t-options='{"widget": "float", "precision": 2}'/>
+                             <span t-esc="o.deduct_value" t-options='{"widget": "float", "precision": 2}'/>
                     </h6>
                 </div>
                 <div style="margin-left:120px">
@@ -228,7 +228,7 @@
                     <h6>
                         <h6>-------------------</h6>
                         <span>TOTAL US$ : </span>
-                             <span t-esc="o.forex_and_amm_val" t-options='{"widget": "float", "precision": 2}'/>
+                             <span t-esc="o.adding_usd_with_percent_value" t-options='{"widget": "float", "precision": 2}'/>
                          <h6>-------------------</h6>
                     </h6>
 <!--                    divided_usd + o.usd_to_php-->

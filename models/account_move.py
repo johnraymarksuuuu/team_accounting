@@ -168,7 +168,23 @@ class account_move(models.Model):
         print(get_curr_name)
         if get_curr_name:
             if get_curr_name == 'PHP':
+                currency = self.env['res.currency'].search([('name', '=', 'PHP')])
+                currency_id_here = currency.id
+                query = "SELECT rate FROM public.res_currency_rate where currency_id = %s" % currency_id_here
+                self.env.cr.execute(query)
+                data_here = self.env.cr.dictfetchone()
+                print(data_here)
+                number = list(data_here.values())
+                save_record = 0
+                for rec in number:
+                    save_record = int(rec)
                 self.forex_and_amm_val = self.getting_total_of_debit_credit_val
+                total = self.getting_total_of_debit_credit_val
+                self.forex_and_amm_val = total
+                amm_usd = self.forex_and_amm_val
+                self.amm_total_usd = amm_usd / save_record
+                minus = self.amm_total_usd - self.add_percent
+                self.deduct_value = minus
             elif get_curr_name == 'USD':
                 currency = self.env['res.currency'].search([('name', '=', 'PHP')])
                 currency_id_here = currency.id
@@ -180,12 +196,11 @@ class account_move(models.Model):
                 save_record = 0
                 for rec in number:
                     save_record = int(rec)
-                total = self.getting_total_of_debit_credit_val / save_record
+                total = self.getting_total_of_debit_credit_val
                 self.forex_and_amm_val = total
-                amm_usd = self.forex_and_amm_val / save_record
-                self.amm_total_usd = amm_usd
-
-                minus = self.forex_and_amm_val - self.add_percent
+                amm_usd = self.forex_and_amm_val
+                self.amm_total_usd = amm_usd / save_record
+                minus = self.amm_total_usd - self.add_percent
                 self.deduct_value = minus
 
             elif get_curr_name == 'EUR':
@@ -208,7 +223,7 @@ class account_move(models.Model):
 
     def adding_usd_with_percent(self):
         self.adding_usd_with_percent_here = 0
-        adding = self.amm_total_usd + self.add_percent
+        adding = self.deduct_value + self.add_percent
         print(self.getting_total_of_debit_credit_val, '<-- USD')
         print(adding, '<-- Adding')
         self.adding_usd_with_percent_value = adding
