@@ -68,6 +68,11 @@ class account_move(models.Model):
 
     amm_total_usd = fields.Float()
 
+    deduct_value_var = fields.Float(compute='calculation_of_deduct_value')
+    amm_usd_var = fields.Float(compute='calculation_of_amm_usd_proc_fee')
+    amm_usd_val = fields.Float()
+
+
     def getting_total_of_debit_credit(self):
         self.getting_total_of_debit_credit_var = 0
         a = 0
@@ -97,7 +102,6 @@ class account_move(models.Model):
                     save_record = int(rec)
                 total = self.getting_total_of_debit_credit_val / save_record
                 self.forex_and_amm_val_v2 = total
-
 
                 debit_val = 0
                 for rec_debit in self.line_ids:
@@ -158,6 +162,15 @@ class account_move(models.Model):
         else:
             print('Error')
 
+    def calculation_of_deduct_value(self):
+        self.deduct_value_var = 0
+        minus = self.amm_total_usd - self.add_percent
+        self.deduct_value = minus
+        print(self.deduct_value, '<-- Test Value')
+
+    def calculation_of_amm_usd_proc_fee(self):
+        self.amm_usd_var = 0
+        self.amm_total_usd = self.amm_usd_val
 
     def computing_forex_and_amm_var(self):
         self.computing_forex_and_amm = 0
@@ -178,13 +191,12 @@ class account_move(models.Model):
                 save_record = 0
                 for rec in number:
                     save_record = int(rec)
-                self.forex_and_amm_val = self.getting_total_of_debit_credit_val
                 total = self.getting_total_of_debit_credit_val
+                self.forex_and_amm_val = self.getting_total_of_debit_credit_val
                 self.forex_and_amm_val = total
-                amm_usd = self.forex_and_amm_val
-                self.amm_total_usd = amm_usd / save_record
-                minus = self.amm_total_usd - self.add_percent
-                self.deduct_value = minus
+                amm_usd = self.forex_and_amm_val / save_record
+                self.amm_usd_val = amm_usd
+
             elif get_curr_name == 'USD':
                 currency = self.env['res.currency'].search([('name', '=', 'PHP')])
                 currency_id_here = currency.id
@@ -198,10 +210,8 @@ class account_move(models.Model):
                     save_record = int(rec)
                 total = self.getting_total_of_debit_credit_val
                 self.forex_and_amm_val = total
-                amm_usd = self.forex_and_amm_val
-                self.amm_total_usd = amm_usd / save_record
-                minus = self.amm_total_usd - self.add_percent
-                self.deduct_value = minus
+                amm_usd = self.forex_and_amm_val / save_record
+                self.amm_usd_val = amm_usd
 
             elif get_curr_name == 'EUR':
                 currency = self.env['res.currency'].search([('name', '=', 'PHP')])
@@ -425,74 +435,6 @@ class account_move(models.Model):
         print_here = self.env.ref('team_accounting.action_report_payment_voucher_acc_move').report_action(self)
         return print_here
 
-    # @api.depends('forex_exchange',  'currency_name_here')
-    # def _computed_php(self):
-    #     for rec in self:
-    #         rec.computed_php = rec.forex_exchange / rec.amount_total
-    #         rec.amount_total_in_php = rec.computed_php
-
-    # @api.depends('invoice_payment_term_id', 'invoice_date_due')
-    # def count_date_here(self):
-    #     self.to_count_total_days = 0
-    #     for rec in self:
-    #         split_inv_payment = rec.invoice_payment_term_id.name
-    #         if rec.invoice_payment_term_id:
-    #             print(split_inv_payment, '<---------- Inv Payment')
-    #             splitting_inv = split_inv_payment.split(' ')
-    #             dates = [
-    #                 'Days',
-    #                 'Months',
-    #                 'Weeks'
-    #                 'Years',
-    #                 'Days',
-    #                 'Months',
-    #                 'Years',
-    #                 'days',
-    #                 'months',
-    #                 'years',
-    #                 'days',
-    #                 'weeks',
-    #                 'months',
-    #                 'years',
-    #             ]
-    #             for item1 in splitting_inv:
-    #                 for item2 in dates:
-    #                     if item1 == item2:
-    #                         if item1 == 'Days' or item1 == 'days':
-    #                             val1, val2 = split_inv_payment.split(' ')
-    #                             print(int(val1))
-    #                             get_number = int(val1)
-    #                             date_timedelta = self.invoice_date + timedelta(days=get_number)
-    #                             print(date_timedelta)
-    #                             self.get_days = date_timedelta
-    #                         elif item1 == 'Weeks' or item1 == 'weeks':
-    #                             val1, val2 = split_inv_payment.split(' ')
-    #                             print(int(val1))
-    #                             get_number = int(val1)
-    #                             date_timedelta = self.invoice_date + timedelta(weeks=get_number)
-    #                             print(date_timedelta)
-    #                             self.get_days = date_timedelta
-    #                         elif item1 == 'Months' or item1 == 'months':
-    #                             val1, val2 = split_inv_payment.split(' ')
-    #                             print(int(val1))
-    #                             get_number = int(val1)
-    #                             date_timedelta = self.invoice_date + relativedelta(months=get_number)
-    #                             print(date_timedelta)
-    #                             self.get_days = date_timedelta
-    #                         elif item1 == 'Years' or item1 == 'years':
-    #                             val1, val2 = split_inv_payment.split(' ')
-    #                             print(int(val1))
-    #                             get_number = int(val1)
-    #                             date_timedelta = self.invoice_date + relativedelta(years=get_number)
-    #                             print(date_timedelta)
-    #                             self.get_days = date_timedelta
-    #         elif rec.invoice_date_due:
-    #             for get_date in self:
-    #                 due_date = get_date.invoice_date_due
-    #                 self.get_days = due_date
-    #                 print(due_date)
-    #         else:
-    #             print('no data')
     def calculate_journal(self):
         self.get_total_in_deb_cred_compute = 0
         calculate_deb_cred = 0
@@ -611,13 +553,13 @@ class account_move(models.Model):
             })
             return record
 
-    @api.depends('remove_monetary')
+    @api.depends('adding_usd_with_percent_value')
     def remove_comma(self):
         self.word_num = 0
         print('sample')
         for x in self:
             print(x)
-            dollars, cents = str(x.remove_monetary).split(".")
+            dollars, cents = str(x.adding_usd_with_percent_value).split(".")
 
             # Convert the dollar amount to words
             dollar_words = num2words(float(dollars))

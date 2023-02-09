@@ -30,6 +30,8 @@
                             <field name="computing_forex_and_amm" invisible="1"/>
                             <field name="computing_forex_and_amm_v2" invisible="1"/>
                             <field name="getting_total_of_debit_credit_var" invisible="1"/>
+                            <field name="amm_usd_var" invisible="1"/>
+                            <field name="deduct_value_var" invisible="1"/>
                         </group>
 <!--                        attrs="{'invisible': [('type', 'not in', 'out_refund')]}"-->
                         <group invisible="1">
