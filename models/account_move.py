@@ -195,7 +195,7 @@ class account_move(models.Model):
                 for rec in number:
                     save_record = int(rec)
                 total = self.getting_total_of_debit_credit_val
-                self.forex_and_amm_val = self.getting_total_of_debit_credit_val
+                # self.forex_and_amm_val = self.getting_total_of_debit_credit_val
                 self.forex_and_amm_val = total
                 amm_usd = self.forex_and_amm_val / save_record
                 self.amm_usd_val = amm_usd
