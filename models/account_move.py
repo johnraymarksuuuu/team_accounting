@@ -72,7 +72,7 @@ class account_move(models.Model):
     amm_usd_var = fields.Float(compute='calculation_of_amm_usd_proc_fee')
     amm_usd_val = fields.Float()
 
-
+    @api.depends('line_ids')
     def getting_total_of_debit_credit(self):
         self.getting_total_of_debit_credit_var = 0
         a = 0
@@ -81,6 +81,7 @@ class account_move(models.Model):
         print(a, '<-- Deb Cred Var')
         self.getting_total_of_debit_credit_val = a
 
+    @api.depends('currency_id', 'getting_total_of_debit_credit_val', 'line_ids', 'forex_and_amm_val_v2')
     def computing_forex_and_amm_var_v2(self):
         self.computing_forex_and_amm_v2 = 0
         get_currency_payable = self.currency_id
@@ -156,22 +157,24 @@ class account_move(models.Model):
                 total = self.total_usd / save_record
                 self.forex_and_amm_val_v2 = total
 
-
             else:
                 print('Error')
         else:
             print('Error')
 
+    @api.depends('add_percent', 'amm_total_usd')
     def calculation_of_deduct_value(self):
         self.deduct_value_var = 0
         minus = self.amm_total_usd - self.add_percent
         self.deduct_value = minus
         print(self.deduct_value, '<-- Test Value')
 
+    @api.depends('amm_usd_val')
     def calculation_of_amm_usd_proc_fee(self):
         self.amm_usd_var = 0
         self.amm_total_usd = self.amm_usd_val
 
+    @api.depends('currency_id', 'getting_total_of_debit_credit_val', 'forex_and_amm_val')
     def computing_forex_and_amm_var(self):
         self.computing_forex_and_amm = 0
         get_currency_payable = self.currency_id
@@ -231,6 +234,7 @@ class account_move(models.Model):
         else:
             print('Error')
 
+    @api.depends('deduct_value', 'add_percent')
     def adding_usd_with_percent(self):
         self.adding_usd_with_percent_here = 0
         adding = self.deduct_value + self.add_percent
@@ -253,6 +257,7 @@ class account_move(models.Model):
         self.saving_forex_php_value = save_record
         print(save_record, '<-- new ')
 
+    @api.depends('amm_total_usd')
     def converting_with_fee(self):
         self.converting_percent = 0
         five_percent = self.amm_total_usd
@@ -261,6 +266,7 @@ class account_move(models.Model):
         self.add_percent = total_convert
         print(self.add_percent, '<-- CONVERT')
 
+    @api.depends('currency_id', 'line_ids')
     def get_journal_payable(self):
         self.debit_payable = 0
         get_currency_payable = self.currency_id
@@ -378,6 +384,7 @@ class account_move(models.Model):
             rec.credit_data = get_credit
             print(rec.credit_data)
 
+    @api.depends('line_ids', 'forex_exchange')
     def convert_debit_credit(self):
         self.to_convert_debit_credit = 0
         currency = self.currency_name_here
