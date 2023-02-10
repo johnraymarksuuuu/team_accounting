@@ -237,15 +237,6 @@ class account_move(models.Model):
         else:
             print('Error')
 
-    # @api.depends('deduct_value', 'add_percent')
-    # def adding_usd_with_percent(self):
-    #     self.adding_usd_with_percent_here = 0
-    #     adding = 0
-    #     for rec in self:
-    #         adding = rec.deduct_value + rec.add_percent
-    #     print(adding, '<-- Adding')
-    #     self.adding_usd_with_percent_value = adding
-
     def getting_php_forex(self):
         self.getting_forex_php = 0
         currency = self.env['res.currency'].search([('name', '=', 'PHP')])
