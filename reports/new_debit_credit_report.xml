@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <template id="new_debit_credit_memo_report_container">
+             <t t-call="web.internal_layout">
+                <t t-set="o" t-value="o.with_context(lang=lang)" />
+                <xpath expr="//style" position="after">
+					 <link rel="preconnect" href="https://fonts.googleapis.com"/>
+					 <link rel="preconnect" href="https://fonts.gstatic.com"/>
+					 <link href="https://fonts.googleapis.com/css2?family=Courier+Prime&amp;display=swap" rel="stylesheet"/>
+                     <style type="text/css">
+				         @import url('https://fonts.googleapis.com/css2?family=Courier+Prime&amp;display=swap');
+<!--                        td,th,tr,table{-->
+<!--							border: 1px solid black;-->
+<!--							font-weight: normal;-->
+<!--							font-family: 'Courier Prime', monospace;-->
+<!--							font-size:11px;-->
+<!--                        }-->
+                        .no_color{
+                            border: 1px solid white;
+                        }
+						table{
+						    font-size:13px;
+						}
+					</style>
+                </xpath>
+                 	<table>
+		<tr>
+            <td  colspan="5" style="text-align: center; border:1px solid white;"></td>
+		</tr>
+		<tr>
+			<td colspan="5" style="text-align: center; border:1px solid white; letter-spacing: 2px; font-weight:bold; height: 30px;">DEBIT / CREDIT MEMO</td>
+		</tr>
+		<tr>
+			<th style="width:200px; text-align: left; border:1px solid white;">
+			Customer Code:
+			</th>
+			<th  style='width: 250px; text-align: left; border:1px solid white;'>ATOM POWER</th>
+			<th  style="width: 130px; text-align: left; border:1px solid white;">
+				DM/CM No.:
+			</th>
+			<th  style='width: 300px; text-align: right; border:1px solid white;'>
+				11/05/11
+			</th>
+		</tr>
+		<tr>
+			<td  style="width:130px; text-align: left; border:1px solid black;">
+			For:
+			</td>
+			<td  style='width: 300px; text-align: left; border:1px solid white;'>&#160;</td>
+			<td  style="width: 130px; text-align: left; border:1px solid white;">
+				Date:
+			</td>
+			<td  style='width: 300px; text-align: right; border:1px solid white;'>
+				11/05/11
+			</td>
+		</tr>
+		<tr>
+			<td  style="width:130px; text-align: left; border:1px solid white;">
+			&#160;
+			</td>
+			<td  style='width: 300px; border:1px solid white;'>&#160;</td>
+			<td  style="width: 130px; text-align: left; border:1px solid white;">
+				Terms:
+			</td>
+			<td  style='width: 300px; text-align: right; border:1px solid white;'>
+				02/02/2023
+			</td>
+		</tr>
+		<tr>
+			<td  style="width:130px; text-align: left; border:1px solid white;">
+			&#160;
+			</td>
+			<td  style='width: 300px; border:1px solid white;'>&#160;</td>
+			<td  style="width: 130px; text-align: left; border:1px solid white;">
+				Due Date:
+			</td>
+			<td  style='width: 300px; text-align: right; border:1px solid white;'>
+				02/02/2023
+			</td>
+		</tr>
+		<tr>
+			<td  style="width:130px; text-align: left; border:1px solid white;">
+			in the Amount of:
+			</td>
+			<td  style='width: 300px; border:1px solid white;'>&#160;</td>
+			<td  style="width: 130px; text-align: left; border:1px solid white;">
+				&#160;
+			</td>
+			<td  style='width: 300px; border:1px solid white;'>
+				&#160;
+			</td>
+		</tr>
+		<tr>
+			<td  style="width:130px; text-align: left; border:1px solid white;">
+			To apply to the following:
+			</td>
+			<td  style='width: 300px; border:1px solid white;'>&#160;</td>
+			<td  style="width: 130px; text-align: left; border:1px solid white;">
+
+			</td>
+			<td  style='width: 300px; border:1px solid black; border-left: none;'>
+				&#160;
+			</td>
+		</tr>
+		<tr style="border-top: 1px solid black;">
+			<td colspan="5" style="height: 30px;"/>
+		</tr>
+		<tr>
+			<td colspan="5" style="height: 30px;"/>
+		</tr>
+		<tr>
+			<td colspan="5" style="height: 30px;"/>
+		</tr>
+		<tr>
+			<td colspan="3" style="height: 30px; letter-spacing: 2px; text-align:center;">PARTICULARS</td>
+			<td colspan="2" style="height: 30px; letter-spacing: 2px; text-align: center;">AMOUNT</td>
+		</tr>
+		<tr>
+			<td colspan="3" style="height: 400px; vertical-align:top;">
+					<span >TO DEBIT YOUR ACCOUNT FOR:</span>
+				<div style="width: 95%; height: 80%; border: 1px solid white; margin: auto;">
+					<div style="margin-left: 90px; margin-top: 20px;">
+						<table>
+							<tr>
+								<th style="width:250px; text-align:center;">
+								Amount PHP
+								</th>
+								<th style="width:120px; text-align:left;">
+									: 1,100.00
+								</th>
+							</tr>
+							<tr>
+								<td class="no_color" style="text-align:center;">
+								FOREX RATE
+								</td>
+								<td class="no_color">
+									: 1,100.00
+								</td>
+							</tr>
+							<tr>
+								<td class="no_color" colspan="2" style="text-align:right;">-----------------------------</td>
+							</tr>
+							<tr>
+								<td class="no_color" style="text-align:center;">
+								AMOUNT USD
+								</td>
+								<td class="no_color">
+									: 1,100.00
+								</td>
+							</tr>
+							<tr>
+								<td class="no_color" style="text-align:center;">
+								ADD : 5% PROCESSING FEE
+								</td>
+								<td class="no_color">
+									: 1,100.00
+								</td>
+							</tr>
+							<tr>
+								<td class="no_color" colspan="2" style="text-align:right;">-----------------------------</td>
+							</tr>
+
+						</table>
+
+					</div>
+						<div style="vertical-align: bottom; margin-top:70px;">
+							<span>AMOUNT: </span><span>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+							tempor incididunt ut labore et dolore magna aliqua. </span>
+						</div>
+				</div>
+			</td>
+			<td colspan="2" style="height: 400px; text-align: center;">
+				<div style="vertical-align: bottom; margin-top:250px;">
+							<span>USD: 20.00</span>
+				</div>
+			</td>
+		</tr>
+	</table>
+	<table>
+		<tr style="">
+			<td colspan="4" style="">
+				<span>GL ENTRY</span>
+			</td>
+		</tr>
+		<tr style="">
+			<td  style="width:232px; border: 1px solid black; text-align: center;">
+			GL CODE
+			</td>
+			<td  style="width:232px; border: 1px solid black; text-align: center;">DESCRIPTION</td>
+			<td  style="width:232px; border: 1px solid black; text-align: center;">
+				DEBIT
+			</td>
+			<td  style="width:237px; border: 1px solid black; text-align: center;">
+				CREDIT
+			</td>
+		</tr>
+		<tr>
+			<td  style="width:235px; height: 150px; border: 1px solid black; text-align: center; vertical-align: text-top; ">
+			GL CODE
+			</td>
+			<td  style="width:232px; border: 1px solid black; text-align: center; vertical-align: text-top;  ">
+			DESCRIPTION
+			</td>
+			<td  style="width:232px; border: 1px solid black; text-align: center; vertical-align: text-top;  ">
+				DEBIT
+			</td>
+			<td  style="width:234px; border: 1px solid black; text-align: center; vertical-align: text-top; ">
+				CREDIT
+			</td>
+		</tr>
+	</table>
+	<table>
+		<tr>
+			<th style="width: 311px; height:100px; vertical-align: bottom; text-align:center;">
+				PREPARED BY
+			</th>
+			<th style="width: 312px; height:100px; vertical-align: bottom; text-align:center;">
+				CHECKED BY
+			</th>
+			<th style="width: 312px; height:100px; vertical-align: bottom; text-align:center;">
+				APPROVED BY
+			</th>
+		</tr>
+	</table>
+             </t>
+        </template>
+
+
+         <template id="new_debit_credit_memo_report_id">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-set="lang" t-value="o.partner_id.lang"/>
+                    <t t-call="team_accounting.new_debit_credit_memo_report_container" t-lang="lang"/>
+                </t>
+            </t>
+        </template>
+
+
+    </data>
+</odoo>

@@ -213,7 +213,7 @@ class account_move(models.Model):
                 self.amm_usd_val = amm_usd
                 minus = self.amm_usd_val * 0.05
                 self.add_percent = minus
-                total_with_percent = amm_usd - minus 
+                total_with_percent = amm_usd - minus
                 self.deduct_value = total_with_percent
                 total = total_with_percent + self.add_percent
                 self.adding_usd_with_percent_value = total
