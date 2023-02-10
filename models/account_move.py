@@ -44,13 +44,13 @@ class account_move(models.Model):
     debit_payable = fields.Float(compute='get_journal_payable')
 
     to_convert_debit_credit = fields.Float(compute='convert_debit_credit')
-    converting_percent = fields.Float(compute='converting_with_fee')
+    # converting_percent = fields.Float(compute='converting_with_fee')
     add_percent = fields.Float()
 
     getting_forex_php = fields.Float(compute='getting_php_forex')
     saving_forex_php_value = fields.Float()
 
-    adding_usd_with_percent_here = fields.Float(compute='adding_usd_with_percent')
+    # adding_usd_with_percent_here = fields.Float(compute='adding_usd_with_percent')
     adding_usd_with_percent_value = fields.Float()
 
     computing_forex_and_amm = fields.Float(compute='computing_forex_and_amm_var')
@@ -68,8 +68,8 @@ class account_move(models.Model):
 
     amm_total_usd = fields.Float()
 
-    deduct_value_var = fields.Float(compute='calculation_of_deduct_value')
-    amm_usd_var = fields.Float(compute='calculation_of_amm_usd_proc_fee')
+    # deduct_value_var = fields.Float(compute='calculation_of_deduct_value')
+    # amm_usd_var = fields.Float(compute='calculation_of_amm_usd_proc_fee')
     amm_usd_val = fields.Float()
 
     @api.depends('line_ids')
@@ -162,18 +162,6 @@ class account_move(models.Model):
         else:
             print('Error')
 
-    @api.depends('add_percent', 'amm_total_usd')
-    def calculation_of_deduct_value(self):
-        self.deduct_value_var = 0
-        minus = self.amm_total_usd - self.add_percent
-        self.deduct_value = minus
-        print(self.deduct_value, '<-- Test Value')
-
-    @api.depends('amm_usd_val')
-    def calculation_of_amm_usd_proc_fee(self):
-        self.amm_usd_var = 0
-        self.amm_total_usd = self.amm_usd_val
-
     @api.depends('currency_id', 'getting_total_of_debit_credit_val', 'forex_and_amm_val')
     def computing_forex_and_amm_var(self):
         self.computing_forex_and_amm = 0
@@ -194,11 +182,19 @@ class account_move(models.Model):
                 save_record = 0
                 for rec in number:
                     save_record = int(rec)
-                total = self.getting_total_of_debit_credit_val
                 # self.forex_and_amm_val = self.getting_total_of_debit_credit_val
-                self.forex_and_amm_val = total
-                amm_usd = self.forex_and_amm_val / save_record
+                calc = self.forex_and_amm_val = self.getting_total_of_debit_credit_val
+                print(calc)
+                amm_usd = calc / save_record
                 self.amm_usd_val = amm_usd
+                minus = self.amm_usd_val * 0.05
+                self.add_percent = minus
+                total_with_percent = amm_usd - minus
+                self.deduct_value = total_with_percent
+                total = total_with_percent + self.add_percent
+                self.adding_usd_with_percent_value = total
+
+                print(amm_usd, '<-- AMM USD')
 
             elif get_curr_name == 'USD':
                 currency = self.env['res.currency'].search([('name', '=', 'PHP')])
@@ -211,10 +207,16 @@ class account_move(models.Model):
                 save_record = 0
                 for rec in number:
                     save_record = int(rec)
-                total = self.getting_total_of_debit_credit_val
-                self.forex_and_amm_val = total
-                amm_usd = self.forex_and_amm_val / save_record
+                calc = self.forex_and_amm_val = self.getting_total_of_debit_credit_val
+                print(calc)
+                amm_usd = calc / save_record
                 self.amm_usd_val = amm_usd
+                minus = self.amm_usd_val * 0.05
+                self.add_percent = minus
+                total_with_percent = amm_usd - minus 
+                self.deduct_value = total_with_percent
+                total = total_with_percent + self.add_percent
+                self.adding_usd_with_percent_value = total
 
             elif get_curr_name == 'EUR':
                 currency = self.env['res.currency'].search([('name', '=', 'PHP')])
@@ -229,18 +231,20 @@ class account_move(models.Model):
                     save_record = int(rec)
                 total = self.getting_total_of_debit_credit_val / save_record
                 self.forex_and_amm_val = total
+
             else:
                 print('Error')
         else:
             print('Error')
 
-    @api.depends('deduct_value', 'add_percent')
-    def adding_usd_with_percent(self):
-        self.adding_usd_with_percent_here = 0
-        adding = self.deduct_value + self.add_percent
-        print(self.getting_total_of_debit_credit_val, '<-- USD')
-        print(adding, '<-- Adding')
-        self.adding_usd_with_percent_value = adding
+    # @api.depends('deduct_value', 'add_percent')
+    # def adding_usd_with_percent(self):
+    #     self.adding_usd_with_percent_here = 0
+    #     adding = 0
+    #     for rec in self:
+    #         adding = rec.deduct_value + rec.add_percent
+    #     print(adding, '<-- Adding')
+    #     self.adding_usd_with_percent_value = adding
 
     def getting_php_forex(self):
         self.getting_forex_php = 0
@@ -257,14 +261,18 @@ class account_move(models.Model):
         self.saving_forex_php_value = save_record
         print(save_record, '<-- new ')
 
-    @api.depends('amm_total_usd')
-    def converting_with_fee(self):
-        self.converting_percent = 0
-        five_percent = self.amm_total_usd
-        print(five_percent, '<-- FIVE PERCENT')
-        total_convert = five_percent * 0.05
-        self.add_percent = total_convert
-        print(self.add_percent, '<-- CONVERT')
+    # @api.depends('amm_total_usd')
+    # def converting_with_fee(self):
+    #     self.converting_percent = 0
+    #     five_percent = self.amm_total_usd
+    #     print(five_percent, '<-- FIVE PERCENT')
+    #     total_convert = five_percent * 0.05
+    #     self.add_percent = total_convert
+    #     print(self.add_percent, '<-- CONVERT')
+    #     record = self.write({
+    #         'add_percent': total_convert
+    #     })
+    #     return record
 
     @api.depends('currency_id', 'line_ids')
     def get_journal_payable(self):

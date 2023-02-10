@@ -24,14 +24,14 @@
                             <field name="debit_here" invisible="1"/>
                             <field name="debit_payable" invisible="1"/>
                             <field name="to_convert_debit_credit" invisible="1"/>
-                            <field name="converting_percent" invisible="1"/>
+<!--                            <field name="converting_percent" invisible="1"/>-->
                             <field name="getting_forex_php" invisible="1"/>
-                            <field name="adding_usd_with_percent_here" invisible="1"/>
+<!--                            <field name="adding_usd_with_percent_here" invisible="1"/>-->
                             <field name="computing_forex_and_amm" invisible="1"/>
                             <field name="computing_forex_and_amm_v2" invisible="1"/>
                             <field name="getting_total_of_debit_credit_var" invisible="1"/>
-                            <field name="amm_usd_var" invisible="1"/>
-                            <field name="deduct_value_var" invisible="1"/>
+<!--                            <field name="amm_usd_var" invisible="1"/>-->
+<!--                            <field name="deduct_value_var" invisible="1"/>-->
                         </group>
 <!--                        attrs="{'invisible': [('type', 'not in', 'out_refund')]}"-->
                         <group invisible="1">
