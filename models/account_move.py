@@ -13,7 +13,7 @@ from odoo.tools import datetime
 
 class account_move(models.Model):
     _inherit = 'account.move'
-    _description = 'Account Move Custom Inherit'
+    _description = 'Account Move Custom Inherit' 
 
     forex_ex = fields.Float(string="Forex Exchange", compute='_compute_forex_ex')
     add_data = fields.Integer(string='Data sample', compute='_compute_add_data')
